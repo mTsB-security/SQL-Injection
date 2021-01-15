@@ -1,0 +1,4 @@
+SUBSTR('foobar', 4, 2)
+SUBSTRING('foobar', 4, 2)
+SUBSTRING('foobar', 4, 2)
+SUBSTRING('foobar', 4, 2)
